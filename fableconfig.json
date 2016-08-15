@@ -1,9 +1,17 @@
 {
     "module": "amd",
     "sourceMaps": true,
-    "projFile": "react-sudoku.fsx",
+    "projFile": "./react-sudoku.fsx",
     "outDir": "out",
     "scripts": {
-        "prebuild": "npm install"
+        "prebuild": "npm install",
+        "postbuild": "webpack"
+    },
+    "targets": {
+        "watch": {
+            "scripts": {
+                "postbuild": "webpack --watch"
+            }
+        }
     }
 }
