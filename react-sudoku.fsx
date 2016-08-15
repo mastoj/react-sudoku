@@ -108,7 +108,8 @@ open Fable.Helpers.Virtualdom
 open Fable.Helpers.Virtualdom.App
 open Fable.Helpers.Virtualdom.Html
 
-let inline onInput x = onEvent "oninput" (fun e -> x (unbox e?target?value)) 
+let inline onInput x = onEvent "oninput" (fun e -> x (unbox e?target?value))
+let maxlength (i:int) = attribute "maxlength" (string i) 
 let view (model:Sudoku) = 
     let inputs =
          div [] 
@@ -118,18 +119,12 @@ let view (model:Sudoku) =
                 [ for j in 0 .. model.Length-1 ->
                         input
                             [
-    //                        MaxLength 1.
+                                maxlength 1
                                 property "value" 
                                     (match model.[i].[j] with
                                         | 0 -> unbox ""
                                         | v -> unbox (v.ToString()))
                                 onInput (fun x -> ChangeBox ((i,j), int (unbox x)))
-    //                        OnChange 
-    //                          (fun ev ->
-    //                                let sudoku = model
-    //                                sudoku.[i].[j] <- int (unbox ev.target?value)
-    //                                x.setState { x.state with Sudoku = sudoku })
-                                //AutoFocus true
                             ]
                 ]
             ]
@@ -144,10 +139,12 @@ let view (model:Sudoku) =
                 button [
                     attribute "class" "button"
                     onMouseClick (fun _ -> Solve )
-                ] [ unbox "Solve" ]
+                ] [ text "Solve" ]
             ]
         ]
 
+open Fable.Import.Browser
 createApp initModel view update
 |> withStartNodeSelector "#todoapp"
+|> withSubscriber "allseeingeye" (fun x -> window.console.log("Something happened: ", x))
 |> start renderer 

@@ -52,6 +52,7 @@
 	    });
 	    exports.initModel = exports.Actions = exports.SudokuAppState = exports.SudokuSolver = undefined;
 	    exports.update = update;
+	    exports.maxlength = maxlength;
 	    exports.view = view;
 	
 	    function _classCallCheck(instance, Constructor) {
@@ -253,6 +254,10 @@
 	
 	    var initModel = exports.initModel = SudokuSolver.toSudoku(_fableCore.List.ofArray([_fableCore.List.ofArray([0, 0, 8, 3, 0, 0, 6, 0, 0]), _fableCore.List.ofArray([0, 0, 4, 0, 0, 0, 0, 1, 0]), _fableCore.List.ofArray([6, 7, 0, 0, 8, 0, 0, 0, 0]), _fableCore.List.ofArray([0, 1, 6, 4, 3, 0, 0, 0, 0]), _fableCore.List.ofArray([0, 0, 0, 7, 9, 0, 0, 2, 0]), _fableCore.List.ofArray([0, 9, 0, 0, 0, 0, 4, 0, 1]), _fableCore.List.ofArray([0, 0, 0, 9, 1, 0, 0, 0, 5]), _fableCore.List.ofArray([0, 0, 3, 0, 5, 0, 0, 0, 2]), _fableCore.List.ofArray([0, 5, 0, 0, 0, 0, 0, 7, 4])]));
 	
+	    function maxlength(i) {
+	        return new _FableHelpers.Html.Types.Attribute("Attribute", [["maxlength", String(i)]]);
+	    }
+	
 	    function view(model) {
 	        var inputs = function () {
 	            var tagName = "div";
@@ -268,7 +273,7 @@
 	                    };
 	                }()(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_1) {
 	                    return _fableCore.Seq.map(function (j) {
-	                        return new _FableHelpers.Html.Types.DomNode("VoidElement", [["input", _fableCore.List.ofArray([new _FableHelpers.Html.Types.Attribute("Property", [["value", function () {
+	                        return new _FableHelpers.Html.Types.DomNode("VoidElement", [["input", _fableCore.List.ofArray([maxlength(1), new _FableHelpers.Html.Types.Attribute("Property", [["value", function () {
 	                            var matchValue = model[i][j];
 	
 	                            if (matchValue === 0) {
@@ -309,16 +314,18 @@
 	                    return new Actions("Solve", []);
 	                }]])])], children]);
 	            };
-	        }()(_fableCore.List.ofArray(["Solve"]))]))]));
+	        }()(_fableCore.List.ofArray([new _FableHelpers.Html.Types.DomNode("Text", ["Solve"])]))]))]));
 	    }
 	
-	    _FableHelpers.App.start((0, _FableHelpers.renderer)(), _FableHelpers.App.withStartNodeSelector("#todoapp", _FableHelpers.App.createApp(initModel, function (model) {
+	    _FableHelpers.App.start((0, _FableHelpers.renderer)(), _FableHelpers.App.withSubscriber("allseeingeye", function (x) {
+	        window.console.log("Something happened: ", x);
+	    }, _FableHelpers.App.withStartNodeSelector("#todoapp", _FableHelpers.App.createApp(initModel, function (model) {
 	        return view(model);
 	    }, function (model) {
 	        return function (command) {
 	            return update(model, command);
 	        };
-	    })));
+	    }))));
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 
